@@ -1,7 +1,7 @@
 # Báo Cáo Cá Nhân — Lab 7: Embedding & Vector Store
 
 **Họ tên:** Nguyễn Vũ Anh  
-**Nhóm:** K4-L3A (Quy chế & Dịch vụ Đào tạo Đại học)  
+**Nhóm:** Magician — K4-L3A
 **Ngày:** 19/09/2026  
 
 > **Nộp 1 bản / sinh viên.** Phần nhóm nộp chung 1 bản trong `REPORT_NHOM.md`. Chi tiết thang điểm: `docs/SCORING.md`.
