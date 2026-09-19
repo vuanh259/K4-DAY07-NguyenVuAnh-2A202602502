@@ -47,8 +47,18 @@ class SentenceChunker:
         self.max_sentences_per_chunk = max(1, max_sentences_per_chunk)
 
     def chunk(self, text: str) -> list[str]:
-        # TODO: split into sentences, group into chunks
-        raise NotImplementedError("Implement SentenceChunker.chunk")
+        if not text:
+            return []
+        raw_sentences = re.split(r"(?<=[.!?])(?:\s+|\n+)", text.strip())
+        sentences = [s.strip() for s in raw_sentences if s.strip()]
+        if not sentences:
+            return []
+
+        chunks: list[str] = []
+        for i in range(0, len(sentences), self.max_sentences_per_chunk):
+            group = sentences[i : i + self.max_sentences_per_chunk]
+            chunks.append(" ".join(group).strip())
+        return chunks
 
 
 class RecursiveChunker:
@@ -66,12 +76,58 @@ class RecursiveChunker:
         self.chunk_size = chunk_size
 
     def chunk(self, text: str) -> list[str]:
-        # TODO: implement recursive splitting strategy
-        raise NotImplementedError("Implement RecursiveChunker.chunk")
+        if not text:
+            return []
+        return self._split(text, self.separators)
 
     def _split(self, current_text: str, remaining_separators: list[str]) -> list[str]:
-        # TODO: recursive helper used by RecursiveChunker.chunk
-        raise NotImplementedError("Implement RecursiveChunker._split")
+        if not current_text:
+            return []
+        if len(current_text) <= self.chunk_size:
+            return [current_text]
+        if not remaining_separators:
+            return [
+                current_text[i : i + self.chunk_size]
+                for i in range(0, len(current_text), self.chunk_size)
+            ]
+
+        sep = remaining_separators[0]
+        next_seps = remaining_separators[1:]
+
+        if sep == "":
+            return [
+                current_text[i : i + self.chunk_size]
+                for i in range(0, len(current_text), self.chunk_size)
+            ]
+
+        if sep not in current_text:
+            return self._split(current_text, next_seps)
+
+        splits = current_text.split(sep)
+        pieces: list[str] = []
+        for part in splits:
+            if len(part) > self.chunk_size:
+                pieces.extend(self._split(part, next_seps))
+            else:
+                pieces.append(part)
+
+        merged_chunks: list[str] = []
+        current_chunk = ""
+        for piece in pieces:
+            if not piece:
+                continue
+            if not current_chunk:
+                current_chunk = piece
+            elif len(current_chunk) + len(sep) + len(piece) <= self.chunk_size:
+                current_chunk = current_chunk + sep + piece
+            else:
+                merged_chunks.append(current_chunk)
+                current_chunk = piece
+
+        if current_chunk:
+            merged_chunks.append(current_chunk)
+
+        return merged_chunks
 
 
 def _dot(a: list[float], b: list[float]) -> float:
@@ -86,13 +142,78 @@ def compute_similarity(vec_a: list[float], vec_b: list[float]) -> float:
 
     Returns 0.0 if either vector has zero magnitude.
     """
-    # TODO: implement cosine similarity formula
-    raise NotImplementedError("Implement compute_similarity")
+    mag_a = math.sqrt(_dot(vec_a, vec_a))
+    mag_b = math.sqrt(_dot(vec_b, vec_b))
+    if mag_a == 0.0 or mag_b == 0.0:
+        return 0.0
+    return _dot(vec_a, vec_b) / (mag_a * mag_b)
 
 
 class ChunkingStrategyComparator:
     """Run all built-in chunking strategies and compare their results."""
 
     def compare(self, text: str, chunk_size: int = 200) -> dict:
-        # TODO: call each chunker, compute stats, return comparison dict
-        raise NotImplementedError("Implement ChunkingStrategyComparator.compare")
+        fixed = FixedSizeChunker(chunk_size=chunk_size, overlap=min(50, max(0, chunk_size // 4))).chunk(text)
+        by_sent = SentenceChunker(max_sentences_per_chunk=max(1, chunk_size // 50)).chunk(text)
+        recursive = RecursiveChunker(chunk_size=chunk_size).chunk(text)
+
+        def _stats(chunks: list[str]) -> dict:
+            count = len(chunks)
+            avg_length = (sum(len(c) for c in chunks) / count) if count > 0 else 0.0
+            return {
+                "count": count,
+                "avg_length": avg_length,
+                "chunks": chunks,
+            }
+
+        return {
+            "fixed_size": _stats(fixed),
+            "by_sentences": _stats(by_sent),
+            "recursive": _stats(recursive),
+        }
+
+
+class HeadingRecursiveChunker:
+    """
+    Chiến lược chia nhỏ theo tiêu đề (heading/section) kết hợp đệ quy cho văn bản quy định.
+
+    Lý do thiết kế:
+    Văn bản quy định/quy chế học vụ được cấu trúc chặt chẽ theo mục (## Điều..., ## 1. ...),
+    mỗi mục là một đơn vị ngữ nghĩa trọn vẹn. Khi một section quá dài phải cắt nhỏ,
+    chiến lược này tự động GẮN LẠI TIÊU ĐỀ vào từng mảnh con để các mảnh phía sau
+    không bị mất ngữ cảnh (Source Context Preservation).
+    """
+
+    def __init__(self, chunk_size: int = 500) -> None:
+        self.chunk_size = chunk_size
+        self.recursive_chunker = RecursiveChunker(chunk_size=chunk_size)
+
+    def chunk(self, text: str) -> list[str]:
+        if not text:
+            return []
+
+        # Tách trước mỗi dòng heading Markdown (# hoặc ##)
+        pattern = r"(?=(?:^|\n)#{1,3}\s+)"
+        raw_sections = [s.strip() for s in re.split(pattern, text) if s.strip()]
+        if not raw_sections:
+            return self.recursive_chunker.chunk(text)
+
+        chunks: list[str] = []
+        for sec in raw_sections:
+            if len(sec) <= self.chunk_size:
+                chunks.append(sec)
+            else:
+                # Tách dòng tiêu đề đầu tiên và phần nội dung
+                lines = sec.split("\n", 1)
+                heading = lines[0].strip()
+                body = lines[1].strip() if len(lines) > 1 else ""
+
+                effective_chunk_size = max(50, self.chunk_size - len(heading) - 2)
+                sub_chunker = RecursiveChunker(chunk_size=effective_chunk_size)
+                sub_chunks = sub_chunker.chunk(body)
+
+                for sub in sub_chunks:
+                    # Gắn lại tiêu đề vào từng mảnh con
+                    chunks.append(f"{heading}\n{sub}")
+
+        return chunks

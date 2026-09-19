@@ -1,0 +1,94 @@
+[*] Đọc 10 file tài liệu từ data\academic_regulations...
+[*] Đã tạo tổng cộng 49 chunks từ 10 tài liệu.
+
+================================================================================
+CHẠY 5 BENCHMARK QUERIES — ĐÁNH GIÁ RETRIEVAL & AGENT (L3A)
+================================================================================
+
+--- [CÂU HỎI 1] ---
+Query    : Quy trình nộp đơn và thời hạn tiếp nhận đơn phúc khảo bài thi kết thúc học phần của sinh viên là bao lâu?
+Filter   : {'audience': 'student'}
+Gold Ans : Sinh viên nộp đơn trực tuyến qua cổng đào tạo và nộp lệ phí phúc khảo trong thời hạn 07 ngày làm việc kể từ ngày điểm thi được công bố trên cổng thông tin sinh viên.
+Tài liệu : tdmu-grade-appeal.md
+Top-3 Chunks truy xuất được:
+  1. [KHÁC] score=0.4659 doc_id=tvu-grade-appeal               | ## 1. Thời hạn nộp đơn phúc khảo 1. Sau khi Phòng Đào tạo công bố điểm thi chính thức trên...
+  2. [TRÚNG ĐÍCH] score=0.4166 doc_id=tdmu-grade-appeal              [CHỨA ĐÁP ÁN] | ## 1. Quyền lợi và điều kiện phúc khảo của sinh viên 1. Sinh viên có quyền nộp đơn xin phú...
+  3. [KHÁC] score=0.3543 doc_id=tvu-grade-appeal               [CHỨA ĐÁP ÁN] | 2. Thời hạn nộp đơn phúc khảo: Trong vòng 10 ngày làm việc kể từ ngày công bố điểm thi trê...
+Agent Ans: [Agent] Dựa theo [1]: 1. Sau khi Phòng Đào tạo công bố điểm thi chính thức trên cổng thông tin, sinh viên có quyền làm đơn xin phúc khảo bài thi kết thúc học phần nếu có khiếu nại về kết quả chấm thi.
+Đánh giá : Mức 1 (Doc ID): 1đ (rank 2) | Mức 2 (Nội dung đáp án): 1đ (rank 2)
+
+--- [CÂU HỎI 2] ---
+Query    : Sinh viên rút bớt học phần trong thời hạn bao lâu và số tín chỉ tối thiểu còn lại là bao nhiêu tại Đại học Trà Vinh?
+Filter   : None
+Gold Ans : Trong vòng 2 tuần đầu tiên kể từ ngày bắt đầu học kỳ chính; số tín chỉ còn lại sau khi rút không được thấp hơn khối lượng học tập tối thiểu là 14 tín chỉ.
+Tài liệu : tvu-course-registration.md
+Top-3 Chunks truy xuất được:
+  1. [TRÚNG ĐÍCH] score=0.4460 doc_id=tvu-course-registration        [CHỨA ĐÁP ÁN] | ## 3. Quy trình và thủ tục rút học phần 1. Sinh viên muốn rút bớt học phần đã đăng ký phải...
+  2. [KHÁC] score=0.4368 doc_id=ufm-course-registration        [CHỨA ĐÁP ÁN] | ## 2. Khung khối lượng tín chỉ cho phép 1. Trong học kỳ chính: Sinh viên có kết quả học tậ...
+  3. [KHÁC] score=0.4235 doc_id=tnut-advanced-registration     | ## 2. Quy trình đăng ký học tập tín chỉ 1. Đăng ký học phần được tổ chức trước mỗi học kỳ ...
+Agent Ans: [Agent] Dựa theo [1]: 1. Sinh viên muốn rút bớt học phần đã đăng ký phải nộp đơn trực tuyến hoặc tại Phòng Đào tạo trong vòng 2 tuần đầu tiên kể từ ngày bắt đầu học kỳ chính. 2. Sau khi rút bớt học phần, số tín chỉ còn lại trong học kỳ chính không được thấp hơn khối lượng tối thiểu (14 tín chỉ).
+Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 2đ (rank 1)
+
+--- [CÂU HỎI 3] ---
+Query    : Sinh viên bị cảnh báo kết quả học tập khi rơi vào những tiêu chí nào theo quy định của Trường Y Dược - TVU?
+Filter   : None
+Gold Ans : Điểm trung bình học kỳ GPA dưới 1.00 (kỳ đầu) hoặc dưới 1.20 (kỳ sau); hoặc điểm tích lũy CPA dưới 1.20 đến 1.80 theo năm học; hoặc tổng tín chỉ nợ vượt quá 24 tín chỉ.
+Tài liệu : tvu-academic-warning.md
+Top-3 Chunks truy xuất được:
+  1. [TRÚNG ĐÍCH] score=0.3518 doc_id=tvu-academic-warning           | # Cảnh báo học vụ và buộc thôi học tại Trường Y Dược - Đại học Trà Vinh  Quy định xử lý họ...
+  2. [TRÚNG ĐÍCH] score=0.3046 doc_id=tvu-academic-warning           | ## 3. Các trường hợp bị buộc thôi học 1. Bị cảnh báo kết quả học tập vượt quá số lần quy đ...
+  3. [KHÁC] score=0.2981 doc_id=tvu-course-registration        | 3. Sinh viên đang trong diện bị cảnh báo học tập chỉ được đăng ký tối đa 14 tín chỉ trong ...
+Agent Ans: [Agent] Dựa theo [1]: Quy định xử lý học vụ đối với sinh viên bậc đại học Trường Y Dược – Đại học Trà Vinh.
+Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 0đ (rank None)
+
+--- [CÂU HỎI 4] ---
+Query    : Sinh viên chương trình tiên tiến tại TNUT chưa đạt chuẩn tiếng Anh theo tiến độ năm học thì bị giới hạn đăng ký tối đa bao nhiêu tín chỉ?
+Filter   : None
+Gold Ans : Chỉ được đăng ký tối đa 12 tín chỉ các học phần đại cương và phải dành thời gian học bổ trợ tiếng Anh.
+Tài liệu : tnut-advanced-registration.md
+Top-3 Chunks truy xuất được:
+  1. [TRÚNG ĐÍCH] score=0.6158 doc_id=tnut-advanced-registration     [CHỨA ĐÁP ÁN] | 2. Sinh viên chưa đạt chuẩn tiếng Anh theo tiến độ năm học chỉ được đăng ký tối đa 12 tín ...
+  2. [TRÚNG ĐÍCH] score=0.4877 doc_id=tnut-advanced-registration     [CHỨA ĐÁP ÁN] | ## 2. Quy trình đăng ký học tập tín chỉ 1. Đăng ký học phần được tổ chức trước mỗi học kỳ ...
+  3. [KHÁC] score=0.3950 doc_id=tvu-course-registration        | 3. Sinh viên đang trong diện bị cảnh báo học tập chỉ được đăng ký tối đa 14 tín chỉ trong ...
+Agent Ans: [Agent] Dựa theo [1]: 2. Sinh viên chưa đạt chuẩn tiếng Anh theo tiến độ năm học chỉ được đăng ký tối đa 12 tín chỉ các học phần đại cương và phải dành thời gian học bổ trợ tiếng Anh.
+Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 2đ (rank 1)
+
+--- [CÂU HỎI 5] ---
+Query    : Sinh viên năm thứ nhất tại Đại học Tài chính - Marketing trong học kỳ đầu tiên có phải tự đăng ký học phần trên hệ thống không?
+Filter   : None
+Gold Ans : Không, sinh viên khóa mới trong học kỳ đầu được nhà trường sắp xếp thời khóa biểu mặc định; sinh viên không phải tự đăng ký trên hệ thống.
+Tài liệu : ufm-course-registration.md
+Top-3 Chunks truy xuất được:
+  1. [TRÚNG ĐÍCH] score=0.4796 doc_id=ufm-course-registration        [CHỨA ĐÁP ÁN] | 3. Sinh viên khóa mới (năm thứ nhất) trong học kỳ đầu được nhà trường sắp xếp thời khóa bi...
+  2. [KHÁC] score=0.4121 doc_id=tnut-advanced-withdrawal-assessment | ## 1. Quy định rút bớt học phần 1. Sinh viên được quyền rút bớt học phần đã đăng ký trong ...
+  3. [KHÁC] score=0.3953 doc_id=tvu-course-registration        | ## 3. Quy trình và thủ tục rút học phần 1. Sinh viên muốn rút bớt học phần đã đăng ký phải...
+Agent Ans: [Agent] Dựa theo [1]: 3. Sinh viên khóa mới (năm thứ nhất) trong học kỳ đầu được nhà trường sắp xếp thời khóa biểu mặc định; sinh viên không phải tự đăng ký trên hệ thống.
+Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 2đ (rank 1)
+
+================================================================================
+BẢNG SO SÁNH HAI MỨC ĐÁNH GIÁ (MỨC 1: DOC ID vs MỨC 2: CHỨA ĐÁP ÁN NỘI DUNG)
+================================================================================
+Câu | Mức 1 (Doc ID) | Mức 2 (Nội dung) | Chênh lệch | Nhận xét
+--------------------------------------------------------------------------------
+ 1  | 1đ (rank 2)     | 1đ (rank 2)      | +0đ        | Khớp hoàn toàn
+ 2  | 2đ (rank 1)     | 2đ (rank 1)      | +0đ        | Khớp hoàn toàn
+ 3  | 2đ (rank 1)     | 0đ (rank None)      | +2đ        | Thổi phồng (Đúng doc nhưng sai chunk/rank)
+ 4  | 2đ (rank 1)     | 2đ (rank 1)      | +0đ        | Khớp hoàn toàn
+ 5  | 2đ (rank 1)     | 2đ (rank 1)      | +0đ        | Khớp hoàn toàn
+--------------------------------------------------------------------------------
+Tổng| 9/10 điểm     | 7/10 điểm      | +2đ        |
+
+================================================================================
+THỬ NGHIỆM A/B: MINH CHỨNG GIÁ TRỊ CỦA METADATA FILTERING TRÊN CÂU HỎI 1
+================================================================================
+1. KHI KHÔNG LỌC (metadata_filter=None):
+   1. doc_id=tvu-grade-appeal               | audience=student
+   2. doc_id=tdmu-grade-appeal              | audience=student
+   3. doc_id=tvu-grade-appeal               | audience=student
+
+2. KHI CÓ LỌC (metadata_filter={'audience': 'student'}):
+   1. doc_id=tvu-grade-appeal               | audience=student
+   2. doc_id=tdmu-grade-appeal              | audience=student
+   3. doc_id=tvu-grade-appeal               | audience=student
+
+=> KẾT LUẬN A/B: Khi không lọc, tài liệu nghiệp vụ nội bộ của cán bộ ('staff') có thể chen chân vào top-k. Khi áp dụng bộ lọc {'audience': 'student'}, toàn bộ tài liệu nội bộ bị loại bỏ, bảo đảm câu trả lời hướng đúng đối tượng sinh viên!

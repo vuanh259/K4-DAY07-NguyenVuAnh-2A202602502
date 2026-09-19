@@ -36,17 +36,17 @@ Chạy `pytest tests/` để kiểm tra tiến độ.
 ### Danh sách cần làm (Checklist)
 - [x] `Document` dataclass — ĐÃ TRIỂN KHAI SẴN
 - [x] `FixedSizeChunker` — ĐÃ TRIỂN KHAI SẴN
-- [ ] `SentenceChunker` — tách dựa trên ranh giới câu, nhóm lại thành các chunks
-- [ ] `RecursiveChunker` — thử nghiệm các dấu phân cách (separators) theo thứ tự, thực hiện đệ quy trên các đoạn có kích thước quá lớn
-- [ ] `compute_similarity` — công thức tính độ tương tự cosine kèm cơ chế bảo vệ chia cho 0
-- [ ] `ChunkingStrategyComparator` — gọi cả ba chiến lược, tính toán các chỉ số thống kê
-- [ ] `EmbeddingStore.__init__` — khởi tạo store (lưu trữ trong bộ nhớ hoặc ChromaDB)
-- [ ] `EmbeddingStore.add_documents` — nhúng (embed) và lưu trữ từng tài liệu
-- [ ] `EmbeddingStore.search` — nhúng truy vấn, xếp hạng theo tích vô hướng (dot product)
-- [ ] `EmbeddingStore.get_collection_size` — trả về số lượng
-- [ ] `EmbeddingStore.search_with_filter` — lọc theo siêu dữ liệu (metadata), sau đó tìm kiếm
-- [ ] `EmbeddingStore.delete_document` — xóa tất cả các chunks của một doc_id
-- [ ] `KnowledgeBaseAgent.answer` — truy xuất (retrieve) + tạo prompt + gọi LLM
+- [x] `SentenceChunker` — tách dựa trên ranh giới câu, nhóm lại thành các chunks
+- [x] `RecursiveChunker` — thử nghiệm các dấu phân cách (separators) theo thứ tự, thực hiện đệ quy trên các đoạn có kích thước quá lớn
+- [x] `compute_similarity` — công thức tính độ tương tự cosine kèm cơ chế bảo vệ chia cho 0
+- [x] `ChunkingStrategyComparator` — gọi cả ba chiến lược, tính toán các chỉ số thống kê
+- [x] `EmbeddingStore.__init__` — khởi tạo store (lưu trữ trong bộ nhớ hoặc ChromaDB)
+- [x] `EmbeddingStore.add_documents` — nhúng (embed) và lưu trữ từng tài liệu
+- [x] `EmbeddingStore.search` — nhúng truy vấn, xếp hạng theo tích vô hướng (dot product)
+- [x] `EmbeddingStore.get_collection_size` — trả về số lượng
+- [x] `EmbeddingStore.search_with_filter` — lọc theo siêu dữ liệu (metadata), sau đó tìm kiếm
+- [x] `EmbeddingStore.delete_document` — xóa tất cả các chunks của một doc_id
+- [x] `KnowledgeBaseAgent.answer` — truy xuất (retrieve) + tạo prompt + gọi LLM
 
 > **Nộp code:** thư mục `src/`
 > **Ghi lại hướng tiếp cận vào:** Báo cáo — Phần 4 (Hướng tiếp cận của tôi)
@@ -77,11 +77,16 @@ Ghi vào bảng:
 
 | # | Tên tài liệu | Nguồn (Source URL) | Ngày lấy / Phiên bản | Số ký tự | Metadata đã gán |
 |---|--------------|------------|--------------------|----------|-----------------|
-| 1 | | | | | |
-| 2 | | | | | |
-| 3 | | | | | |
-| 4 | | | | | |
-| 5 | | | | | |
+| 1 | `tvu-course-registration.md` | https://cmp.tvu.edu.vn/so-tay-sinh-vien/ | 19/09/2026 — Sổ tay SV 2026 | 2.017 | `source_url`, `retrieved_at`, `document_version`, `audience=student`, `category=registration`, `university=TVU` |
+| 2 | `tvu-academic-warning.md` | https://cmp.tvu.edu.vn/so-tay-sinh-vien/ | 19/09/2026 — Sổ tay SV 2026 | 1.691 | `source_url`, `retrieved_at`, `document_version`, `audience=student`, `category=warning`, `university=TVU` |
+| 3 | `tvu-grade-appeal.md` | https://cmp.tvu.edu.vn/so-tay-sinh-vien/ | 19/09/2026 — Sổ tay SV 2026 | 1.479 | `source_url`, `retrieved_at`, `document_version`, `audience=student`, `category=grade-appeal`, `university=TVU` |
+| 4 | `tdmu-grade-appeal.md` | https://tdmu.edu.vn/hinh/thuvien/taptin/2-6-2025-4-42-24-pm06-BKTKDDBCL-QT.09-Phuc%20khao%20Bai%20KTr.pdf | 19/09/2026 — QT.09 Lần 01 | 1.325 | `source_url`, `retrieved_at`, `document_version`, `audience=student`, `category=grade-appeal`, `university=TDMU` |
+| 5 | `tdmu-grade-appeal-operations.md` | https://tdmu.edu.vn/hinh/thuvien/taptin/2-6-2025-4-42-24-pm06-BKTKDDBCL-QT.09-Phuc%20khao%20Bai%20KTr.pdf | 19/09/2026 — QT.09 Lần 01 | 1.392 | `source_url`, `retrieved_at`, `document_version`, `audience=staff`, `category=grade-appeal-operations`, `university=TDMU` |
+| 6 | `tnut-advanced-registration.md` | https://fit.tnut.edu.vn/bai-viet/quy-che-dao-tao-trinh-do-dai-hoc-cho-chuong-trinh-tien-tien-nam-2022-176 | 19/09/2026 — 3571/QĐ-ĐHKTCN | 1.363 | `source_url`, `retrieved_at`, `document_version`, `audience=student`, `category=registration-advanced`, `university=TNUT` |
+| 7 | `tnut-advanced-withdrawal-assessment.md` | https://fit.tnut.edu.vn/bai-viet/quy-che-dao-tao-trinh-do-dai-hoc-cho-chuong-trinh-tien-tien-nam-2022-176 | 19/09/2026 — 3571/QĐ-ĐHKTCN | 1.244 | `source_url`, `retrieved_at`, `document_version`, `audience=student`, `category=withdrawal-advanced`, `university=TNUT` |
+| 8 | `ufm-course-registration.md` | https://pdt.ufm.edu.vn/dulieu/quiche/1329_Quy_che_dao_tao_tin_chi_tu_khoa_2021.htm | 19/09/2026 — 1329/QĐ-ĐHTCM | 1.329 | `source_url`, `retrieved_at`, `document_version`, `audience=student`, `category=registration`, `university=UFM` |
+| 9 | `ufm-assessment.md` | https://pdt.ufm.edu.vn/dulieu/quiche/1329_Quy_che_dao_tao_tin_chi_tu_khoa_2021.htm | 19/09/2026 — 1329/QĐ-ĐHTCM | 1.225 | `source_url`, `retrieved_at`, `document_version`, `audience=student`, `category=assessment`, `university=UFM` |
+| 10 | `qtu-academic-affairs-overview.md` | https://qtu.edu.vn/qd-95-ban-hanh-quy-dinh-ve-cong-tac-hoc-vu-tai-truong-dai-hoc-quang-trung/ | 19/09/2026 — 95/QĐ-ĐHQT | 1.505 | `source_url`, `retrieved_at`, `document_version`, `audience=all`, `category=overview`, `university=QTU` |
 
 **Bước 3 — Thiết kế cấu trúc metadata (metadata schema):** Mỗi tài liệu cần `source_url`, `retrieved_at`, `document_version` và ít nhất 2 trường hữu ích cho việc truy xuất (ví dụ: `audience`, `department`, `category`, `language`, `difficulty`).
 
@@ -124,11 +129,11 @@ Mỗi nhóm viết **đúng 5 câu hỏi đánh giá** kèm theo **câu trả l�
 
 | # | Câu hỏi (Query) | Câu trả lời chuẩn (Gold Answer) | Chunk nào chứa thông tin? |
 |---|-------|-------------------------------|--------------------------|
-| 1 | | | |
-| 2 | | | |
-| 3 | | | |
-| 4 | | | |
-| 5 | | | |
+| 1 | TVU: thời hạn rút học phần và xử lý tự ý bỏ học từ tuần thứ ba? | Rút trong 2 tuần đầu học kỳ chính; từ tuần thứ ba tự ý bỏ học nhận điểm F. | `tvu-course-registration::c03` |
+| 2 | TDMU: nộp đơn phúc khảo ở đâu, trong bao lâu và lệ phí thế nào? *(lọc `audience=student`)* | Nộp BM.01 về bộ môn quản lý đề cương trong 7 ngày từ khi công bố điểm; thực hiện quy định lệ phí phúc khảo. | `tdmu-grade-appeal::c01–c02` |
+| 3 | TNUT chương trình tiên tiến: giới hạn tín chỉ học kỳ chính? | Năm 3 kỳ chính: 8–16; năm 2 kỳ chính: 10–24 tín chỉ. | `tnut-advanced-registration::c02` |
+| 4 | UFM: trước khi đăng ký cần tìm hiểu gì và nhờ ai tư vấn? | Chương trình, đề cương, điều kiện, kế hoạch, thời khóa biểu; hỏi cố vấn học tập. | `ufm-course-registration::c02` |
+| 5 | TVU: ngưỡng cảnh báo ĐTBTL và số tín chỉ F? | <1,20; <1,40; <1,60; <1,80 theo năm; F tích lũy vượt 24 tín chỉ. | `tvu-academic-warning::c01` |
 
 **Yêu cầu:**
 - Câu hỏi phải đa dạng (không hỏi 5 câu có nội dung/cấu trúc giống hệt nhau)
@@ -177,7 +182,7 @@ Tìm ít nhất **1 trường hợp lỗi (failure case)** trong quá trình so 
 
 ## Danh Sách Kiểm Tra Nộp Bài (Submission Checklist)
 
-- [ ] Vượt qua tất cả các bài kiểm thử (tests): `pytest tests/ -v`
-- [ ] Cập nhật thư mục `src/` (cá nhân)
-- [ ] Hoàn thành báo cáo nhóm (`report/REPORT_NHOM.md` — 1 file/nhóm)
-- [ ] Hoàn thành báo cáo cá nhân (`report/REPORT_CANHAN.md` — 1 file/sinh viên)
+- [x] Vượt qua tất cả các bài kiểm thử (tests): `pytest tests/ -v` — 42/42 passed
+- [x] Cập nhật thư mục `src/` (cá nhân)
+- [x] Hoàn thành báo cáo nhóm (`report/REPORT_NHOM.md` — 1 file/nhóm)
+- [x] Hoàn thành báo cáo cá nhân (`report/REPORT_CANHAN.md` — 1 file/sinh viên)
