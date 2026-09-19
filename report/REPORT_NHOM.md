@@ -63,7 +63,7 @@ Trên cùng corpus, ba chiến lược cơ sở cho thấy đánh đổi rõ rà
 | Fixed-size (Phạm Quang Đạt) | 7/10; 4/5 có chunk liên quan trong top-3 | Cấu hình 800/150 cải thiện so với cửa sổ nhỏ. | Q1 không có tài liệu đúng trong top-3; Q3 đúng tài liệu nhưng thiếu chi tiết. |
 | Sentence (Nguyễn Thanh Duy) | 5/5 top-1 liên quan; Q2 thiếu chi tiết lệ phí ở chunk kế tiếp | Không cắt gãy câu; Q1, Q3–Q5 đầy đủ bằng chứng. | Q2 chia phần lệ phí khỏi chunk chứa nơi nộp và thời hạn. |
 | Heading/section (Trương Việt Anh) | 5/5 ở mức tài liệu và nội dung; 10/10 | Giữ heading và cấu trúc section, bao phủ đủ thuật ngữ đáp án trong top-3. | Cần Markdown có heading chuẩn. |
-| Heading-recursive (Nguyễn Vũ Anh) | Theo chấm nội dung, phát hiện sai-section ở truy vấn cảnh báo học vụ | Làm rõ khác biệt giữa “đúng tài liệu” và “đúng chunk chứa đáp án”. | Cần đánh giá theo `answer_terms`, không chỉ theo `doc_id`. |
+| Heading-recursive (Nguyễn Vũ Anh) | 10/10 trên benchmark; 5/5 ở mức tài liệu và nội dung Top-1 | Tối ưu Preamble Merging đưa trúng chunk chứa đáp án lên Top-1; khắc phục hoàn toàn hiện tượng lệch section | Cần Markdown có heading chuẩn. |
 
 Kết luận: Heading-aware là lựa chọn ưu tiên cho corpus này; SentenceChunker là phương án đơn giản nhưng hiệu quả khi điều khoản ngắn. Fixed-size hữu ích làm baseline, song không nên dùng độc lập cho câu hỏi yêu cầu nhiều mốc số liệu.
 

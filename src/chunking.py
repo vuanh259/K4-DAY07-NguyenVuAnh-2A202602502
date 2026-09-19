@@ -192,11 +192,18 @@ class HeadingRecursiveChunker:
         if not text:
             return []
 
-        # Tách trước mỗi dòng heading Markdown (# hoặc ##)
-        pattern = r"(?=(?:^|\n)#{1,3}\s+)"
+        # Ưu tiên tách theo heading cấp mục (##) để giữ tiêu đề chung đi liền với mục đầu tiên
+        pattern = r"(?=(?:^|\n)##\s+)"
         raw_sections = [s.strip() for s in re.split(pattern, text) if s.strip()]
+        if not raw_sections or len(raw_sections) <= 1:
+            raw_sections = [s.strip() for s in re.split(r"(?=(?:^|\n)#{1,3}\s+)", text) if s.strip()]
         if not raw_sections:
             return self.recursive_chunker.chunk(text)
+
+        # Nếu đoạn đầu tiên là tiêu đề chung (# hoặc mở đầu), ghép vào mục đầu tiên để bảo tồn trọn vẹn ngữ cảnh
+        if len(raw_sections) >= 2 and not raw_sections[0].startswith("##"):
+            raw_sections[1] = f"{raw_sections[0]}\n\n{raw_sections[1]}"
+            raw_sections = raw_sections[1:]
 
         chunks: list[str] = []
         for sec in raw_sections:

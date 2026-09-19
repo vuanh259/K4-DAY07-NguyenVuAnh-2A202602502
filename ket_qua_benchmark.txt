@@ -1,21 +1,21 @@
 [*] Đọc 10 file tài liệu từ data\academic_regulations...
-[*] Đã tạo tổng cộng 49 chunks từ 10 tài liệu.
+[*] Đã tạo tổng cộng 53 chunks từ 10 tài liệu.
 
 ================================================================================
 CHẠY 5 BENCHMARK QUERIES — ĐÁNH GIÁ RETRIEVAL & AGENT (L3A)
 ================================================================================
 
 --- [CÂU HỎI 1] ---
-Query    : Quy trình nộp đơn và thời hạn tiếp nhận đơn phúc khảo bài thi kết thúc học phần của sinh viên là bao lâu?
+Query    : Quy trình nộp đơn và thời hạn tiếp nhận đơn phúc khảo bài kiểm tra của sinh viên tại Trường Đại học Thủ Dầu Một là bao lâu?
 Filter   : {'audience': 'student'}
 Gold Ans : Sinh viên nộp đơn trực tuyến qua cổng đào tạo và nộp lệ phí phúc khảo trong thời hạn 07 ngày làm việc kể từ ngày điểm thi được công bố trên cổng thông tin sinh viên.
 Tài liệu : tdmu-grade-appeal.md
 Top-3 Chunks truy xuất được:
-  1. [KHÁC] score=0.4659 doc_id=tvu-grade-appeal               | ## 1. Thời hạn nộp đơn phúc khảo 1. Sau khi Phòng Đào tạo công bố điểm thi chính thức trên...
-  2. [TRÚNG ĐÍCH] score=0.4166 doc_id=tdmu-grade-appeal              [CHỨA ĐÁP ÁN] | ## 1. Quyền lợi và điều kiện phúc khảo của sinh viên 1. Sinh viên có quyền nộp đơn xin phú...
-  3. [KHÁC] score=0.3543 doc_id=tvu-grade-appeal               [CHỨA ĐÁP ÁN] | 2. Thời hạn nộp đơn phúc khảo: Trong vòng 10 ngày làm việc kể từ ngày công bố điểm thi trê...
-Agent Ans: [Agent] Dựa theo [1]: 1. Sau khi Phòng Đào tạo công bố điểm thi chính thức trên cổng thông tin, sinh viên có quyền làm đơn xin phúc khảo bài thi kết thúc học phần nếu có khiếu nại về kết quả chấm thi.
-Đánh giá : Mức 1 (Doc ID): 1đ (rank 2) | Mức 2 (Nội dung đáp án): 1đ (rank 2)
+  1. [TRÚNG ĐÍCH] score=0.4987 doc_id=tdmu-grade-appeal              [CHỨA ĐÁP ÁN] | # Quy trình phúc khảo bài kiểm tra tại Trường Đại học Thủ Dầu Một 2. Thời hạn tiếp nhận đơ...
+  2. [TRÚNG ĐÍCH] score=0.4594 doc_id=tdmu-grade-appeal              | # Quy trình phúc khảo bài kiểm tra tại Trường Đại học Thủ Dầu Một Mã quy trình: QT/BKTKĐ&Đ...
+  3. [KHÁC] score=0.3828 doc_id=tvu-grade-appeal               | # Phúc khảo và điều chỉnh điểm tại Trường Y Dược - Đại học Trà Vinh 2. Thời hạn nộp đơn ph...
+Agent Ans: [Agent] Dựa theo [1]: 2. Thời hạn tiếp nhận đơn: Trong vòng 07 ngày làm việc kể từ ngày điểm thi được công bố trên cổng thông tin sinh viên. 3. Hình thức nộp đơn: Sinh viên nộp đơn trực tuyến qua cổng đào tạo và nộp lệ phí phúc khảo theo quy định tài chính của trường.
+Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 2đ (rank 1)
 
 --- [CÂU HỎI 2] ---
 Query    : Sinh viên rút bớt học phần trong thời hạn bao lâu và số tín chỉ tối thiểu còn lại là bao nhiêu tại Đại học Trà Vinh?
@@ -30,16 +30,16 @@ Agent Ans: [Agent] Dựa theo [1]: 1. Sinh viên muốn rút bớt học phần 
 Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 2đ (rank 1)
 
 --- [CÂU HỎI 3] ---
-Query    : Sinh viên bị cảnh báo kết quả học tập khi rơi vào những tiêu chí nào theo quy định của Trường Y Dược - TVU?
+Query    : Các tiêu chí cảnh báo học vụ về điểm GPA, CPA và số tín chỉ nợ đối với sinh viên Trường Y Dược - TVU là gì?
 Filter   : None
 Gold Ans : Điểm trung bình học kỳ GPA dưới 1.00 (kỳ đầu) hoặc dưới 1.20 (kỳ sau); hoặc điểm tích lũy CPA dưới 1.20 đến 1.80 theo năm học; hoặc tổng tín chỉ nợ vượt quá 24 tín chỉ.
 Tài liệu : tvu-academic-warning.md
 Top-3 Chunks truy xuất được:
-  1. [TRÚNG ĐÍCH] score=0.3518 doc_id=tvu-academic-warning           | # Cảnh báo học vụ và buộc thôi học tại Trường Y Dược - Đại học Trà Vinh  Quy định xử lý họ...
-  2. [TRÚNG ĐÍCH] score=0.3046 doc_id=tvu-academic-warning           | ## 3. Các trường hợp bị buộc thôi học 1. Bị cảnh báo kết quả học tập vượt quá số lần quy đ...
-  3. [KHÁC] score=0.2981 doc_id=tvu-course-registration        | 3. Sinh viên đang trong diện bị cảnh báo học tập chỉ được đăng ký tối đa 14 tín chỉ trong ...
-Agent Ans: [Agent] Dựa theo [1]: Quy định xử lý học vụ đối với sinh viên bậc đại học Trường Y Dược – Đại học Trà Vinh.
-Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 0đ (rank None)
+  1. [TRÚNG ĐÍCH] score=0.4526 doc_id=tvu-academic-warning           [CHỨA ĐÁP ÁN] | # Cảnh báo học vụ và buộc thôi học tại Trường Y Dược - Đại học Trà Vinh 3. Tổng số tín chỉ...
+  2. [TRÚNG ĐÍCH] score=0.4300 doc_id=tvu-academic-warning           | # Cảnh báo học vụ và buộc thôi học tại Trường Y Dược - Đại học Trà Vinh Quy định xử lý học...
+  3. [KHÁC] score=0.3774 doc_id=tvu-grade-appeal               | # Phúc khảo và điều chỉnh điểm tại Trường Y Dược - Đại học Trà Vinh Hướng dẫn quyền khiếu ...
+Agent Ans: [Agent] Dựa theo [1]: 3. Tổng số tín chỉ nợ đọng chưa đạt từ đầu khóa học vượt quá 24 tín chỉ.
+Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 2đ (rank 1)
 
 --- [CÂU HỎI 4] ---
 Query    : Sinh viên chương trình tiên tiến tại TNUT chưa đạt chuẩn tiếng Anh theo tiến độ năm học thì bị giới hạn đăng ký tối đa bao nhiêu tín chỉ?
@@ -47,9 +47,9 @@ Filter   : None
 Gold Ans : Chỉ được đăng ký tối đa 12 tín chỉ các học phần đại cương và phải dành thời gian học bổ trợ tiếng Anh.
 Tài liệu : tnut-advanced-registration.md
 Top-3 Chunks truy xuất được:
-  1. [TRÚNG ĐÍCH] score=0.6158 doc_id=tnut-advanced-registration     [CHỨA ĐÁP ÁN] | 2. Sinh viên chưa đạt chuẩn tiếng Anh theo tiến độ năm học chỉ được đăng ký tối đa 12 tín ...
+  1. [TRÚNG ĐÍCH] score=0.7198 doc_id=tnut-advanced-registration     [CHỨA ĐÁP ÁN] | # Đăng ký học phần chương trình tiên tiến tại TNUT 2. Sinh viên chưa đạt chuẩn tiếng Anh t...
   2. [TRÚNG ĐÍCH] score=0.4877 doc_id=tnut-advanced-registration     [CHỨA ĐÁP ÁN] | ## 2. Quy trình đăng ký học tập tín chỉ 1. Đăng ký học phần được tổ chức trước mỗi học kỳ ...
-  3. [KHÁC] score=0.3950 doc_id=tvu-course-registration        | 3. Sinh viên đang trong diện bị cảnh báo học tập chỉ được đăng ký tối đa 14 tín chỉ trong ...
+  3. [KHÁC] score=0.4665 doc_id=tvu-course-registration        | ## 2. Giới hạn khối lượng tín chỉ đăng ký 3. Sinh viên đang trong diện bị cảnh báo học tập...
 Agent Ans: [Agent] Dựa theo [1]: 2. Sinh viên chưa đạt chuẩn tiếng Anh theo tiến độ năm học chỉ được đăng ký tối đa 12 tín chỉ các học phần đại cương và phải dành thời gian học bổ trợ tiếng Anh.
 Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 2đ (rank 1)
 
@@ -59,9 +59,9 @@ Filter   : None
 Gold Ans : Không, sinh viên khóa mới trong học kỳ đầu được nhà trường sắp xếp thời khóa biểu mặc định; sinh viên không phải tự đăng ký trên hệ thống.
 Tài liệu : ufm-course-registration.md
 Top-3 Chunks truy xuất được:
-  1. [TRÚNG ĐÍCH] score=0.4796 doc_id=ufm-course-registration        [CHỨA ĐÁP ÁN] | 3. Sinh viên khóa mới (năm thứ nhất) trong học kỳ đầu được nhà trường sắp xếp thời khóa bi...
-  2. [KHÁC] score=0.4121 doc_id=tnut-advanced-withdrawal-assessment | ## 1. Quy định rút bớt học phần 1. Sinh viên được quyền rút bớt học phần đã đăng ký trong ...
-  3. [KHÁC] score=0.3953 doc_id=tvu-course-registration        | ## 3. Quy trình và thủ tục rút học phần 1. Sinh viên muốn rút bớt học phần đã đăng ký phải...
+  1. [TRÚNG ĐÍCH] score=0.5936 doc_id=ufm-course-registration        [CHỨA ĐÁP ÁN] | # Tổ chức đăng ký học tập tại Đại học Tài chính - Marketing 3. Sinh viên khóa mới (năm thứ...
+  2. [KHÁC] score=0.4524 doc_id=tnut-advanced-withdrawal-assessment | # Rút học phần và đánh giá chương trình tiên tiến tại TNUT ## 1. Quy định rút bớt học phần...
+  3. [KHÁC] score=0.4515 doc_id=ufm-assessment                 | # Đánh giá và tính điểm học phần tại Đại học Tài chính - Marketing 3. Sinh viên vắng thi k...
 Agent Ans: [Agent] Dựa theo [1]: 3. Sinh viên khóa mới (năm thứ nhất) trong học kỳ đầu được nhà trường sắp xếp thời khóa biểu mặc định; sinh viên không phải tự đăng ký trên hệ thống.
 Đánh giá : Mức 1 (Doc ID): 2đ (rank 1) | Mức 2 (Nội dung đáp án): 2đ (rank 1)
 
@@ -70,24 +70,24 @@ BẢNG SO SÁNH HAI MỨC ĐÁNH GIÁ (MỨC 1: DOC ID vs MỨC 2: CHỨA ĐÁP 
 ================================================================================
 Câu | Mức 1 (Doc ID) | Mức 2 (Nội dung) | Chênh lệch | Nhận xét
 --------------------------------------------------------------------------------
- 1  | 1đ (rank 2)     | 1đ (rank 2)      | +0đ        | Khớp hoàn toàn
+ 1  | 2đ (rank 1)     | 2đ (rank 1)      | +0đ        | Khớp hoàn toàn
  2  | 2đ (rank 1)     | 2đ (rank 1)      | +0đ        | Khớp hoàn toàn
- 3  | 2đ (rank 1)     | 0đ (rank None)      | +2đ        | Thổi phồng (Đúng doc nhưng sai chunk/rank)
+ 3  | 2đ (rank 1)     | 2đ (rank 1)      | +0đ        | Khớp hoàn toàn
  4  | 2đ (rank 1)     | 2đ (rank 1)      | +0đ        | Khớp hoàn toàn
  5  | 2đ (rank 1)     | 2đ (rank 1)      | +0đ        | Khớp hoàn toàn
 --------------------------------------------------------------------------------
-Tổng| 9/10 điểm     | 7/10 điểm      | +2đ        |
+Tổng| 10/10 điểm     | 10/10 điểm      | +0đ        |
 
 ================================================================================
 THỬ NGHIỆM A/B: MINH CHỨNG GIÁ TRỊ CỦA METADATA FILTERING TRÊN CÂU HỎI 1
 ================================================================================
 1. KHI KHÔNG LỌC (metadata_filter=None):
-   1. doc_id=tvu-grade-appeal               | audience=student
+   1. doc_id=tdmu-grade-appeal              | audience=student
    2. doc_id=tdmu-grade-appeal              | audience=student
    3. doc_id=tvu-grade-appeal               | audience=student
 
 2. KHI CÓ LỌC (metadata_filter={'audience': 'student'}):
-   1. doc_id=tvu-grade-appeal               | audience=student
+   1. doc_id=tdmu-grade-appeal              | audience=student
    2. doc_id=tdmu-grade-appeal              | audience=student
    3. doc_id=tvu-grade-appeal               | audience=student
 

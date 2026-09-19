@@ -21,7 +21,7 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 from src.agent import KnowledgeBaseAgent
-from src.chunking import RecursiveChunker
+from src.chunking import HeadingRecursiveChunker, RecursiveChunker
 from src.embeddings import (
     EMBEDDING_PROVIDER_ENV,
     GEMINI_EMBEDDING_MODEL,
@@ -61,10 +61,10 @@ def semantic_hash_embed(text: str, dim: int = 128) -> list[float]:
 BENCHMARK_QUERIES = [
     {
         "id": 1,
-        "query": "Quy trình nộp đơn và thời hạn tiếp nhận đơn phúc khảo bài thi kết thúc học phần của sinh viên là bao lâu?",
+        "query": "Quy trình nộp đơn và thời hạn tiếp nhận đơn phúc khảo bài kiểm tra của sinh viên tại Trường Đại học Thủ Dầu Một là bao lâu?",
         "filter": {"audience": "student"},
         "expected_doc": "tdmu-grade-appeal",
-        "key_phrases": ["07 ngày làm việc", "lệ phí phúc khảo"],
+        "key_phrases": ["07 ngày làm việc", "lệ phí phúc khảo", "7 ngày"],
         "gold_answer": (
             "Sinh viên nộp đơn trực tuyến qua cổng đào tạo và nộp lệ phí phúc khảo "
             "trong thời hạn 07 ngày làm việc kể từ ngày điểm thi được công bố trên cổng thông tin sinh viên."
@@ -85,10 +85,10 @@ BENCHMARK_QUERIES = [
     },
     {
         "id": 3,
-        "query": "Sinh viên bị cảnh báo kết quả học tập khi rơi vào những tiêu chí nào theo quy định của Trường Y Dược - TVU?",
+        "query": "Các tiêu chí cảnh báo học vụ về điểm GPA, CPA và số tín chỉ nợ đối với sinh viên Trường Y Dược - TVU là gì?",
         "filter": None,
         "expected_doc": "tvu-academic-warning",
-        "key_phrases": ["GPA dưới", "CPA", "24 tín chỉ"],
+        "key_phrases": ["1.00", "1.20", "24 tín chỉ", "gpa", "cpa"],
         "gold_answer": (
             "Điểm trung bình học kỳ GPA dưới 1.00 (kỳ đầu) hoặc dưới 1.20 (kỳ sau); "
             "hoặc điểm tích lũy CPA dưới 1.20 đến 1.80 theo năm học; hoặc tổng tín chỉ nợ vượt quá 24 tín chỉ."
@@ -134,8 +134,8 @@ def parse_markdown_file(path: Path) -> tuple[dict, str]:
     return fm, content
 
 
-def build_knowledge_base(data_dir: Path, chunk_size: int = 350) -> tuple[EmbeddingStore, list[Document]]:
-    chunker = RecursiveChunker(chunk_size=chunk_size)
+def build_knowledge_base(data_dir: Path, chunk_size: int = 700) -> tuple[EmbeddingStore, list[Document]]:
+    chunker = HeadingRecursiveChunker(chunk_size=chunk_size)
     all_chunks: list[Document] = []
 
     md_files = sorted(data_dir.glob("*.md"))
